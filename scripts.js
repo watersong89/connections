@@ -5,6 +5,7 @@ const groupFour = ['north', 'south', 'east', 'west'];
 
 let input = [];
 let toggledItems = 0;
+let remainingGuesses = 4;
 
 const grid = document.querySelector('.grid-container');
 const boxes = document.querySelectorAll('.box');
@@ -12,6 +13,8 @@ const submitButton = document.querySelector('.submit-button');
 const deselectButton = document.querySelector('.deselect-button');
 const shuffleButton = document.querySelector('.shuffle-button');
 const messageBoard = document.querySelector('.message-board');
+
+const guessesRemaining = document.querySelector('.guesses-remaining')
 
 function checkMatches(input, group) {
   let correctGuesses = 0;
@@ -44,38 +47,29 @@ function playGame() {
   const resultGroupThree = checkMatches(input, groupThree);
   const resultGroupFour = checkMatches(input, groupFour);
 
-  if (resultGroupOne === 'one away') {
-    messageBoard.textContent = 'One Away!';
-  } else if (resultGroupOne === 'correct') {
+  if (resultGroupOne === 'one away' || resultGroupTwo === 'one away' || resultGroupThree === 'one away' || resultGroupFour === 'one away') {
+    messageBoard.textContent = 'One Away!'
+    remainingGuesses--;
+    clearSelection();
+  } else if (resultGroupOne === 'correct' || resultGroupTwo === 'correct' || resultGroupThree === 'correct' || resultGroupFour === 'correct') {
     messageBoard.textContent = 'Correct!';
-    handleCorrectMatches('group1');
-  } else if (resultGroupOne === 'incorrect') {
+    if(resultGroupOne === 'correct') {
+      handleCorrectMatches('group1');
+    } else if(resultGroupTwo === 'correct') {
+      handleCorrectMatches('group2');
+    } else if(resultGroupThree === 'correct') {
+      handleCorrectMatches('group3');
+    } else if(resultGroupFour === 'correct') {
+      handleCorrectMatches('group4');
+    }
+  } else if ( resultGroupOne === 'incorrect' || resultGroupTwo === 'incorrect' || resultGroupThree === 'incorrect' || resultGroupFour === 'incorrect') {
     messageBoard.textContent = 'Incorrect!';
-  }
-
-  if (resultGroupTwo === 'one away') {
-    messageBoard.textContent = 'One Away!';
-  } else if (resultGroupTwo === 'correct') {
-    messageBoard.textContent = 'Correct!';
-    handleCorrectMatches('group2');
-  }
-
-  if (resultGroupThree === 'one away') {
-    messageBoard.textContent = 'One Away!';
-  } else if (resultGroupThree === 'correct') {
-    messageBoard.textContent = 'Correct!';
-    handleCorrectMatches('group3');
-  }
-
-  if (resultGroupFour === 'one away') {
-    messageBoard.textContent = 'One Away!';
-  } else if (resultGroupFour === 'correct') {
-    messageBoard.textContent = 'Correct!';
-    handleCorrectMatches('group4');
+    remainingGuesses--;
   }
 
   input = [];
   clearSelection();
+  updateDisplay();
 }
 
 function handleCorrectMatches(group) {
@@ -92,6 +86,10 @@ function shuffleGrid() {
   for (let i = grid.children.length; i >= 0; i--) {
     grid.appendChild(grid.children[Math.floor(Math.random() * i) | 0]);
   }
+}
+
+function updateDisplay() {
+  guessesRemaining.textContent = `Guesses remaining...${remainingGuesses}`;
 }
 
 
