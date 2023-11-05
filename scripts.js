@@ -102,9 +102,30 @@ function solveGroup() {
       grid.removeChild(child);
     }
   }
-
   for (const correctElement of correctElements) {
     grid.insertBefore(correctElement, grid.firstChild);
+  }
+}
+
+function solveWall() {
+  boxes.forEach((box) => {
+    box.classList.add('correct');
+  })
+  reorganizeGrid();
+}
+
+function reorganizeGrid() {
+  const groupOrder = [groupOne, groupTwo, groupThree, groupFour];
+  let currentIndex = 0;
+
+  for (const group of groupOrder) {
+    for (const element of group) {
+      const box = Array.from(grid.children).find(child => child.textContent === element);
+      if (box) {
+        grid.appendChild(box);
+        currentIndex++;
+      }
+    }
   }
 }
 
@@ -112,7 +133,9 @@ function updateDisplay() {
   if (remainingGuesses > 0){
     guessesRemaining.textContent = `Guesses remaining...${remainingGuesses}`;} else {
       guessesRemaining.textContent = `Guesses remaining...${remainingGuesses}`;
-      alert('Game Over!');}
+      alert('Game Over!');
+      solveWall();
+    }
 }
 
 
