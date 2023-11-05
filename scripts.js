@@ -26,3 +26,13 @@ checkMatches(['red', 'blue', 'green', 'pink'], groupOne);
 checkMatches(['one', 'two', 'three', 'four'], groupTwo);
 checkMatches(['a', 'b', 'c', 'd'], groupThree);
 checkMatches(['north', 'south', 'east', 'west'], groupFour);
+
+
+const boxes = document.querySelectorAll('.box');
+boxes.forEach((box) => {
+  box.addEventListener('click', () => {
+    if (box.classList.contains('toggled')) {
+      box.classList.remove('toggled')
+    } else box.classList.add('toggled');
+  })
+})
