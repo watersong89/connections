@@ -4,6 +4,14 @@ const groupThree = ['a', 'b', 'c', 'd'];
 const groupFour = ['north', 'south', 'east', 'west'];
 
 let input = [];
+let toggledItems = 0;
+
+const boxes = document.querySelectorAll('.box');
+const submitButton = document.querySelector('.submit-button');
+const deselectButton = document.querySelector('.deselect-button');
+const shuffleButton = document.querySelector('.shuffle-button')
+
+
 
 function checkMatches(input, group) {
   let correctGuesses = 0;
@@ -17,6 +25,7 @@ function checkMatches(input, group) {
 
   if (correctGuesses === 3) {
     console.log('one away');
+
   } else if (correctGuesses === 4) {
     console.log('correct');
   } else {
@@ -24,8 +33,24 @@ function checkMatches(input, group) {
   }
 }
 
-const boxes = document.querySelectorAll('.box');
-let toggledItems = 0;
+function clearSelection() {
+  boxes.forEach((box) => {
+    box.classList.remove('toggled')
+  })
+  input = [];
+  toggledItems = 0;
+}
+
+function playGame() {
+  checkMatches(input, groupOne);
+  checkMatches(input, groupTwo);
+  checkMatches(input, groupThree);
+  checkMatches(input, groupFour);
+  input = [];
+  clearSelection();
+}
+
+
 boxes.forEach((box) => {
   box.addEventListener('click', () => {
     if (box.classList.contains('toggled')) {
@@ -42,16 +67,12 @@ boxes.forEach((box) => {
   })
 })
 
-function playGame() {
-  checkMatches(input, groupOne);
-  checkMatches(input, groupTwo);
-  checkMatches(input, groupThree);
-  checkMatches(input, groupFour);
-  input = [];
-}
 
-const submitButton = document.querySelector('.submit-button');
 
 submitButton.addEventListener('click', () => {
   playGame();
+})
+
+deselectButton.addEventListener('click', () => {
+  clearSelection();
 })
