@@ -29,10 +29,16 @@ checkMatches(['north', 'south', 'east', 'west'], groupFour);
 
 
 const boxes = document.querySelectorAll('.box');
+let toggledItems = 0;
 boxes.forEach((box) => {
   box.addEventListener('click', () => {
     if (box.classList.contains('toggled')) {
-      box.classList.remove('toggled')
-    } else box.classList.add('toggled');
+      box.classList.remove('toggled');
+      toggledItems--;
+    } else if(toggledItems === 4) return; 
+      else {
+      box.classList.add('toggled');
+      toggledItems++;
+    }
   })
 })
