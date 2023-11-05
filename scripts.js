@@ -36,24 +36,18 @@ function itemiseHistory() {
       gameSelection.push(box.textContent);
     }
   });
-
-  // Check if the game selections already exist in userHistory
   for (let i = 0; i < userHistory.length; i++) {
     if (arraysAreEqual(userHistory[i], gameSelection)) {
       alreadyChosen = true;
-      break; // Exit the loop if selections are already chosen
+      break;
     }
   }
-
   if (alreadyChosen) {
     alert('Already chosen');
     return;
   }
-
   userHistory.push(gameSelection);
-  console.log(gameSelection);
   gameSelection = [];
-  console.log(userHistory);
 }
 
 function checkMatches(input, group) {
@@ -90,24 +84,24 @@ function playGame() {
   if (alreadyChosen) {
     clearSelection();
     return;
-  } 
+  }
 
   if (resultGroupOne === 'one away' || resultGroupTwo === 'one away' || resultGroupThree === 'one away' || resultGroupFour === 'one away') {
     messageBoard.textContent = 'One Away!';
-      remainingGuesses--;
+    remainingGuesses--;
     clearSelection();
   } else if (resultGroupOne === 'correct' || resultGroupTwo === 'correct' || resultGroupThree === 'correct' || resultGroupFour === 'correct') {
     messageBoard.textContent = 'Correct!';
-    if(resultGroupOne === 'correct') {
+    if (resultGroupOne === 'correct') {
       handleCorrectMatches('group1');
-    } else if(resultGroupTwo === 'correct') {
+    } else if (resultGroupTwo === 'correct') {
       handleCorrectMatches('group2');
-    } else if(resultGroupThree === 'correct') {
+    } else if (resultGroupThree === 'correct') {
       handleCorrectMatches('group3');
-    } else if(resultGroupFour === 'correct') {
+    } else if (resultGroupFour === 'correct') {
       handleCorrectMatches('group4');
     }
-  } else if ( resultGroupOne === 'incorrect' || resultGroupTwo === 'incorrect' || resultGroupThree === 'incorrect' || resultGroupFour === 'incorrect') {
+  } else if (resultGroupOne === 'incorrect' || resultGroupTwo === 'incorrect' || resultGroupThree === 'incorrect' || resultGroupFour === 'incorrect') {
     messageBoard.textContent = 'Incorrect!';
     remainingGuesses--;
   }
@@ -175,12 +169,13 @@ function reorganizeGrid() {
 }
 
 function updateDisplay() {
-  if (remainingGuesses > 0){
-    guessesRemaining.textContent = `Guesses remaining...${remainingGuesses}`;} else {
-      guessesRemaining.textContent = `Guesses remaining...${remainingGuesses}`;
-      alert('Game Over!');
-      solveWall();
-    }
+  if (remainingGuesses > 0) {
+    guessesRemaining.textContent = `Guesses remaining...${remainingGuesses}`;
+  } else {
+    guessesRemaining.textContent = `Guesses remaining...${remainingGuesses}`;
+    alert('Game Over!');
+    solveWall();
+  }
 }
 
 
