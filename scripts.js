@@ -84,10 +84,14 @@ function handleCorrectMatches(group) {
 }
 
 function shuffleGrid() {
-  for (let i = grid.children.length; i >= 0; i--) {
-    grid.appendChild(grid.children[Math.floor(Math.random() * i) | 0]);
+  const nonCorrectElements = Array.from(grid.children).filter(child => !child.classList.contains('correct'));
+
+  for (let i = nonCorrectElements.length; i >= 0; i--) {
+    const randomIndex = Math.floor(Math.random() * i);
+    grid.appendChild(nonCorrectElements[randomIndex]);
   }
 }
+
 
 function solveGroup() {
   const correctElements = [];
@@ -103,7 +107,6 @@ function solveGroup() {
     grid.insertBefore(correctElement, grid.firstChild);
   }
 }
-
 
 function updateDisplay() {
   if (remainingGuesses > 0){
