@@ -80,6 +80,7 @@ function handleCorrectMatches(group) {
       box.classList.add('off');
     }
   });
+  solveGroup();
 }
 
 function shuffleGrid() {
@@ -88,8 +89,27 @@ function shuffleGrid() {
   }
 }
 
+function solveGroup() {
+  const correctElements = [];
+  for (let i = grid.children.length - 1; i >= 0; i--) {
+    const child = grid.children[i];
+    if (child.classList.contains('correct')) {
+      correctElements.push(child);
+      grid.removeChild(child);
+    }
+  }
+
+  for (const correctElement of correctElements) {
+    grid.insertBefore(correctElement, grid.firstChild);
+  }
+}
+
+
 function updateDisplay() {
-  guessesRemaining.textContent = `Guesses remaining...${remainingGuesses}`;
+  if (remainingGuesses > 0){
+    guessesRemaining.textContent = `Guesses remaining...${remainingGuesses}`;} else {
+      guessesRemaining.textContent = `Guesses remaining...${remainingGuesses}`;
+      alert('Game Over!');}
 }
 
 
