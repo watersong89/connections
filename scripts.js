@@ -3,6 +3,8 @@ const groupTwo = ['one', 'two', 'three', 'four'];
 const groupThree = ['a', 'b', 'c', 'd'];
 const groupFour = ['north', 'south', 'east', 'west'];
 
+let input = [];
+
 function checkMatches(input, group) {
   let correctGuesses = 0;
 
@@ -33,12 +35,17 @@ let toggledItems = 0;
 boxes.forEach((box) => {
   box.addEventListener('click', () => {
     if (box.classList.contains('toggled')) {
+      const index = input.indexOf(box.textContent);
       box.classList.remove('toggled');
       toggledItems--;
+      input.splice(index, 1);
+      console.log(input);
     } else if(toggledItems === 4) return; 
       else {
       box.classList.add('toggled');
+      input.push(box.textContent)
       toggledItems++;
+      console.log(input);
     }
   })
 })
