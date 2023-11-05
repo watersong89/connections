@@ -24,12 +24,6 @@ function checkMatches(input, group) {
   }
 }
 
-checkMatches(['red', 'blue', 'green', 'pink'], groupOne);
-checkMatches(['one', 'two', 'three', 'four'], groupTwo);
-checkMatches(['a', 'b', 'c', 'd'], groupThree);
-checkMatches(['north', 'south', 'east', 'west'], groupFour);
-
-
 const boxes = document.querySelectorAll('.box');
 let toggledItems = 0;
 boxes.forEach((box) => {
@@ -39,13 +33,25 @@ boxes.forEach((box) => {
       box.classList.remove('toggled');
       toggledItems--;
       input.splice(index, 1);
-      console.log(input);
     } else if(toggledItems === 4) return; 
       else {
       box.classList.add('toggled');
       input.push(box.textContent)
       toggledItems++;
-      console.log(input);
     }
   })
+})
+
+function playGame() {
+  checkMatches(input, groupOne);
+  checkMatches(input, groupTwo);
+  checkMatches(input, groupThree);
+  checkMatches(input, groupFour);
+  input = [];
+}
+
+const submitButton = document.querySelector('.submit-button');
+
+submitButton.addEventListener('click', () => {
+  playGame();
 })
