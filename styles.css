@@ -29,7 +29,22 @@ body {
   color: aliceblue;
 }
 
-.correct {
+.correct.group1 {
   background-color: green;
+  color: aliceblue;
+}
+
+.correct.group2 {
+  background-color: blueviolet;
+  color: aliceblue;
+}
+
+.correct.group3 {
+  background-color: silver;
+  color: aliceblue;
+}
+
+.correct.group4 {
+  background-color: fuchsia;
   color: aliceblue;
 }
