@@ -6,6 +6,9 @@ const groupFour = ['north', 'south', 'east', 'west'];
 let input = [];
 let toggledItems = 0;
 let remainingGuesses = 4;
+let alreadyChosen = false;
+let gameSelection = [];
+let userHistory = [];
 
 const grid = document.querySelector('.grid-container');
 const boxes = document.querySelectorAll('.box');
@@ -13,8 +16,45 @@ const submitButton = document.querySelector('.submit-button');
 const deselectButton = document.querySelector('.deselect-button');
 const shuffleButton = document.querySelector('.shuffle-button');
 const messageBoard = document.querySelector('.message-board');
-
 const guessesRemaining = document.querySelector('.guesses-remaining')
+
+function arraysAreEqual(array1, array2) {
+  if (array1.length !== array2.length) {
+    return false;
+  }
+  for (let i = 0; i < array1.length; i++) {
+    if (array1[i] !== array2[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function itemiseHistory() {
+  boxes.forEach((box) => {
+    if (box.classList.contains('toggled')) {
+      gameSelection.push(box.textContent);
+    }
+  });
+
+  // Check if the game selections already exist in userHistory
+  for (let i = 0; i < userHistory.length; i++) {
+    if (arraysAreEqual(userHistory[i], gameSelection)) {
+      alreadyChosen = true;
+      break; // Exit the loop if selections are already chosen
+    }
+  }
+
+  if (alreadyChosen) {
+    alert('Already chosen');
+    return;
+  }
+
+  userHistory.push(gameSelection);
+  console.log(gameSelection);
+  gameSelection = [];
+  console.log(userHistory);
+}
 
 function checkMatches(input, group) {
   let correctGuesses = 0;
@@ -47,9 +87,14 @@ function playGame() {
   const resultGroupThree = checkMatches(input, groupThree);
   const resultGroupFour = checkMatches(input, groupFour);
 
+  if (alreadyChosen) {
+    clearSelection();
+    return;
+  } 
+
   if (resultGroupOne === 'one away' || resultGroupTwo === 'one away' || resultGroupThree === 'one away' || resultGroupFour === 'one away') {
-    messageBoard.textContent = 'One Away!'
-    remainingGuesses--;
+    messageBoard.textContent = 'One Away!';
+      remainingGuesses--;
     clearSelection();
   } else if (resultGroupOne === 'correct' || resultGroupTwo === 'correct' || resultGroupThree === 'correct' || resultGroupFour === 'correct') {
     messageBoard.textContent = 'Correct!';
@@ -158,6 +203,7 @@ boxes.forEach((box) => {
 
 submitButton.addEventListener('click', () => {
   messageBoard.textContent = '';
+  itemiseHistory();
   playGame();
 })
 
