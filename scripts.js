@@ -228,13 +228,14 @@ function handleCorrectMatches(groupName) {
 
 
 function shuffleGrid() {
-  const nonCorrectElements = Array.from(grid.children).filter(child => !child.classList.contains('correct'));
+  const nonCorrectElements = Array.from(grid.children).filter(child => !child.classList.contains('correct') && !child.classList.contains('connection-div'));
 
   for (let i = nonCorrectElements.length; i >= 0; i--) {
     const randomIndex = Math.floor(Math.random() * i);
     grid.appendChild(nonCorrectElements[randomIndex]);
   }
 }
+
 
 // Initialize a reference to the last connectionDiv as null
 let lastConnectionDiv = null;
