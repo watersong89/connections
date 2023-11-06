@@ -263,7 +263,9 @@ function solveGroup() {
 function generateConnectionsDiv(group) {
   const connectionDiv = document.createElement('div');
   connectionDiv.classList.add('connection-div');
-  connectionDiv.textContent = `Connection: ${group.connection}. Elements: ${group.elements.join(', ')}`;
+  connectionDiv.innerHTML = `
+  <h2 class="connection-div-header">Connection: ${group.connection}.</h2> <p class="connection-div-content">${group.elements.join(', ')}</p>
+  `;
   connectionDiv.style.backgroundColor = group.backgroundColor;
   
   // If a lastConnectionDiv exists, insert the new connectionDiv after it; otherwise, insert it at the beginning of the grid

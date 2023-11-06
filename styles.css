@@ -77,5 +77,8 @@ body {
 
 .connection-div {
   grid-column-start: span 4;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
