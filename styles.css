@@ -33,6 +33,18 @@ button {
   margin: 0 1rem;
 }
 
+button:active {
+  transform: scale(0.9);
+  background-color: var(--brown);
+  color: #ffffff;
+}
+
+button:disabled {
+  border: 1px solid grey;
+  color: grey;
+  
+}
+
 .button-container {
   display: flex;
   justify-content: center;

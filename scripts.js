@@ -356,9 +356,13 @@ boxes.forEach((box) => {
 })
 
 submitButton.addEventListener('click', () => {
-  messageBoard.textContent = '';
+  if(toggledItems < 4){
+    alert('Please make four choices!')
+  }
+else if(countCorrectGuesses() !== 16 && toggledItems === 4) {
   itemiseHistory();
   playGame();
+} else return;
 })
 
 deselectButton.addEventListener('click', () => {
