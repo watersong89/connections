@@ -3,6 +3,31 @@ const groupTwo = ['one', 'two', 'three', 'four'];
 const groupThree = ['a', 'b', 'c', 'd'];
 const groupFour = ['north', 'south', 'east', 'west'];
 
+const groups = [
+  {
+    name: 'groupOne',
+    elements: ['red', 'blue', 'green', 'pink'],
+    connection: 'colours',
+  },
+  {
+    name: 'groupTwo',
+    elements: ['one', 'two', 'three', 'four'],
+    connection: 'numbers',
+  },
+  {
+    name: 'groupThree',
+    elements: ['a', 'b', 'c', 'd'],
+    connection: 'letters',
+  },
+  {
+    name: 'groupFour',
+    elements: ['north', 'south', 'east', 'west'],
+    connection: 'directions',
+  },
+]
+
+
+
 let input = [];
 let toggledItems = 0;
 let remainingGuesses = 4;
@@ -19,6 +44,20 @@ const messageBoard = document.querySelector('.message-board');
 const guessesRemaining = document.querySelector('.guesses-remaining')
 const userHistoryElement = document.querySelector('.user-history');
 
+//On-page-load functions//
+populateGrid(groups);
+shuffleGrid();
+//////////////////////
+
+function populateGrid(groups) {
+  
+  groups.forEach((group, index) => {
+    const boxes = Array.from(grid.querySelectorAll(`.group${index + 1}`));
+    group.elements.forEach((element, i) => {
+      boxes[i].innerHTML = element;
+    });
+  });
+}
 
 function arraysAreEqual(array1, array2) {
   if (array1.length !== array2.length) {
