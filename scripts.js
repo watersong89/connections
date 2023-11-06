@@ -1,8 +1,3 @@
-const groupOne = ['red', 'blue', 'green', 'pink'];
-const groupTwo = ['one', 'two', 'three', 'four'];
-const groupThree = ['a', 'b', 'c', 'd'];
-const groupFour = ['north', 'south', 'east', 'west'];
-
 const groups = [
   {
     name: 'groupOne',
@@ -25,8 +20,6 @@ const groups = [
     connection: 'directions',
   },
 ]
-
-
 
 let input = [];
 let toggledItems = 0;
@@ -126,14 +119,22 @@ function getGroup(item) {
 
 
 
-function checkMatches(input, group) {
+function checkMatches(input, groupName) {
+  const group = groups.find((group) => group.name === groupName);
+
+  if (!group) {
+    console.error(`Group '${groupName}' not found in the groups array.`);
+    return 'incorrect';
+  }
+
   let correctGuesses = 0;
-  for (let i = 0; i < group.length; i++) {
-    const element = group[i];
+  for (let i = 0; i < group.elements.length; i++) {
+    const element = group.elements[i];
     if (input.includes(element)) {
       correctGuesses++;
     }
   }
+
   if (correctGuesses === 3) {
     return 'one away';
   } else if (correctGuesses === 4) {
@@ -142,6 +143,7 @@ function checkMatches(input, group) {
     return 'incorrect';
   }
 }
+
 
 function clearSelection() {
   boxes.forEach((box) => {
@@ -152,32 +154,27 @@ function clearSelection() {
 }
 
 function playGame() {
-  const resultGroupOne = checkMatches(input, groupOne);
-  const resultGroupTwo = checkMatches(input, groupTwo);
-  const resultGroupThree = checkMatches(input, groupThree);
-  const resultGroupFour = checkMatches(input, groupFour);
+  const results = [];
+
+  for (const group of groups) {
+    const result = checkMatches(input, group.name);
+    results.push({ group: group.name, result });
+  }
 
   if (alreadyChosen) {
     clearSelection();
     return;
   }
 
-  if (
-    resultGroupOne === 'correct' ||
-    resultGroupTwo === 'correct' ||
-    resultGroupThree === 'correct' ||
-    resultGroupFour === 'correct'
-  ) {
+  const correctResults = results.filter((result) => result.result === 'correct');
+  const oneAwayResults = results.filter((result) => result.result === 'one away');
+
+  if (correctResults.length > 0) {
     // Handle Correct Guesses
     messageBoard.textContent = 'Correct!';
-    if (resultGroupOne === 'correct') {
-      handleCorrectMatches('group1');
-    } else if (resultGroupTwo === 'correct') {
-      handleCorrectMatches('group2');
-    } else if (resultGroupThree === 'correct') {
-      handleCorrectMatches('group3');
-    } else if (resultGroupFour === 'correct') {
-      handleCorrectMatches('group4');
+    
+    for (const correctResult of correctResults) {
+      handleCorrectMatches(correctResult.group);
     }
 
     // Check if the user has made four correct guesses
@@ -186,11 +183,11 @@ function playGame() {
       // Handle game ending here, e.g., display a message or perform any end-game actions
       displayUserHistory();
     }
-  } else if (resultGroupOne === 'one away' || resultGroupTwo === 'one away' || resultGroupThree === 'one away' || resultGroupFour === 'one away') {
+  } else if (oneAwayResults.length > 0) {
     messageBoard.textContent = 'One Away!';
     remainingGuesses--;
     clearSelection();
-  } else if (resultGroupOne === 'incorrect' || resultGroupTwo === 'incorrect' || resultGroupThree === 'incorrect' || resultGroupFour === 'incorrect') {
+  } else {
     messageBoard.textContent = 'Incorrect!';
     remainingGuesses--;
   }
@@ -199,6 +196,7 @@ function playGame() {
   clearSelection();
   updateDisplay();
 }
+
 
 function countCorrectGuesses() {
   let correctGuessCount = 0;
@@ -211,16 +209,19 @@ function countCorrectGuesses() {
 }
 
 
-function handleCorrectMatches(group) {
+function handleCorrectMatches(groupName) {
+  const groupElements = groups.find(group => group.name === groupName).elements;
   boxes.forEach((box) => {
-    if (box.classList.contains(group)) {
-      box.classList.add('correct');
+    if (groupElements.includes(box.textContent)) {
       box.classList.remove('on');
-      box.classList.add('off');
+      box.classList.add('correct', 'off');
     }
   });
   solveGroup();
 }
+
+
+
 
 function shuffleGrid() {
   const nonCorrectElements = Array.from(grid.children).filter(child => !child.classList.contains('correct'));
@@ -255,11 +256,11 @@ function solveWall() {
 }
 
 function reorganizeGrid() {
-  const groupOrder = [groupOne, groupTwo, groupThree, groupFour];
+  const groupOrder = groups.map(group => group.elements);
   let currentIndex = 0;
 
-  for (const group of groupOrder) {
-    for (const element of group) {
+  for (const groupElements of groupOrder) {
+    for (const element of groupElements) {
       const box = Array.from(grid.children).find(child => child.textContent === element);
       if (box) {
         grid.appendChild(box);
