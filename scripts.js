@@ -3,25 +3,25 @@ const groups = [
     name: 'groupOne',
     elements: ['red', 'blue', 'green', 'pink'],
     connection: 'colours',
-    backgroundColor: 'blue',
+    backgroundColor: '#F9DF6D',
   },
   {
     name: 'groupTwo',
     elements: ['one', 'two', 'three', 'four'],
     connection: 'numbers',
-    backgroundColor: 'seagreen',
+    backgroundColor: '#9FC35A',
   },
   {
     name: 'groupThree',
     elements: ['a', 'b', 'c', 'd'],
     connection: 'letters',
-    backgroundColor: 'firebrick',
+    backgroundColor: '#B1C4EF',
   },
   {
     name: 'groupFour',
     elements: ['north', 'south', 'east', 'west'],
     connection: 'directions',
-    backgroundColor: 'lightcoral',
+    backgroundColor: '#BA81C5',
   },
 ]
 
@@ -47,7 +47,7 @@ shuffleGrid();
 //////////////////////
 
 function populateGrid(groups) {
-  
+
   groups.forEach((group, index) => {
     const boxes = Array.from(grid.querySelectorAll(`.group${index + 1}`));
     group.elements.forEach((element, i) => {
@@ -120,9 +120,6 @@ function getGroup(item) {
   return 0; // Default or no group
 }
 
-
-
-
 function checkMatches(input, groupName) {
   const group = groups.find((group) => group.name === groupName);
 
@@ -176,14 +173,14 @@ function playGame() {
   if (correctResults.length > 0) {
     // Handle Correct Guesses
     messageBoard.textContent = 'Correct!';
-    
+
     for (const correctResult of correctResults) {
       handleCorrectMatches(correctResult.group);
     }
 
     // Check if the user has made four correct guesses
     if (countCorrectGuesses() === 16) {
-      messageBoard.textContent = 'You won! Game Over!';
+      messageBoard.textContent = 'You won! Congratulations!';
       // Handle game ending here, e.g., display a message or perform any end-game actions
       displayUserHistory();
     }
@@ -268,25 +265,55 @@ function generateConnectionsDiv(group) {
   `;
   connectionDiv.style.textTransform = 'uppercase';
   connectionDiv.style.backgroundColor = group.backgroundColor;
-  
+
   // If a lastConnectionDiv exists, insert the new connectionDiv after it; otherwise, insert it at the beginning of the grid
   if (lastConnectionDiv) {
     grid.insertBefore(connectionDiv, lastConnectionDiv.nextSibling);
   } else {
     grid.insertBefore(connectionDiv, grid.firstChild);
   }
-  
+
   // Update the reference to the last connectionDiv
   lastConnectionDiv = connectionDiv;
 }
 
-
 function solveWall() {
-  boxes.forEach((box) => {
-    box.classList.add('correct');
-  })
-  reorganizeGrid();
+  // Determine which groups have been solved
+  const solvedGroups = [];
+  groups.forEach((group) => {
+    const isSolved = group.elements.every((element) => {
+      const box = Array.from(boxes).find((box) => box.textContent === element);
+      return box && box.classList.contains('correct');
+    });
+
+    if (isSolved) {
+      solvedGroups.push(group.name);
+    }
+  });
+
+  // Remove all non-connectionDiv elements from the grid
+  removeNonConnectionDivs();
+
+  // Iterate over groups and create connectionDivs for each unsolved group
+  groups.forEach((group) => {
+    if (!solvedGroups.includes(group.name)) {
+      generateConnectionsDiv(group);
+    }
+  });
+
+  // Display user history
   displayUserHistory();
+}
+
+
+
+function removeNonConnectionDivs() {
+  const nonConnectionDivs = document.querySelectorAll('.box');
+  nonConnectionDivs.forEach((div) => {
+    if (!div.classList.contains('connection-div')) {
+      div.remove();
+    }
+  });
 }
 
 function reorganizeGrid() {
@@ -306,13 +333,14 @@ function reorganizeGrid() {
 
 function updateDisplay() {
   if (remainingGuesses > 0) {
-    guessesRemaining.textContent = `Guesses remaining...${remainingGuesses}`;
+    guessesRemaining.textContent = `Mistakes remaining: ${remainingGuesses}`;
   } else {
-    guessesRemaining.textContent = `Guesses remaining...${remainingGuesses}`;
-    alert('Game Over!');
+    guessesRemaining.textContent = `Mistakes remaining: ${remainingGuesses}`;
     solveWall();
   }
 }
+
+
 
 
 boxes.forEach((box) => {

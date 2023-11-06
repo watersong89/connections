@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Connections</title>
   <link rel="stylesheet" href="meyers-reset.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
 
+<body>
+  <h1>Connections</h1>
+  <h2>Create four groups of four!</h2>
   <div class="grid-container">
     <div class="box on group1"></div>
     <div class="box on group1"></div>
@@ -29,15 +35,18 @@
     <div class="box on group4"></div>
   </div>
 
-  <div class="message-board"></div>
+  <div class="guesses-remaining">Mistakes remaining: 4</div>
 
-  <button class="shuffle-button">Shuffle</button>
-  <button class="deselect-button">Deselect All</button>
-  <button class="submit-button">Submit</button>
-  <div class="guesses-remaining">Remaining guesses...4</div>
+  <div class="button-container">
+    <button class="shuffle-button">Shuffle</button>
+    <button class="deselect-button">Deselect All</button>
+    <button class="submit-button">Submit</button>
+  </div>
+
+  <div class="message-board"></div>
   <div class="user-history"></div>
 
   <script src="scripts.js"></script>
 </body>
-</html>
 
+</html>

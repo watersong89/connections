@@ -1,33 +1,103 @@
+:root {
+  --purple: #B3A7FE;
+  --offWhite: #EFEFE6;
+  --brown: #5A594E;
+  --yellow: #F9DF6D;
+  --green: #9FC35A;
+  --blue: #B1C4EF;
+  --violet: #BA81C5;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
-  background-color: antiquewhite;
+  background-color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+button {
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 1rem;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 80vh;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .grid-container{
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
-  height: 800px;
-  width: 800px;
+  height: 50vh;
+  width: 80vh;
   gap: 10px;
 }
 
 .box {
-  background-color: lightgray;
+  background-color: var(--offWhite);
   border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: teal;
+  color: #000000;
   cursor: pointer;
   text-transform: uppercase;
+  font-weight: 600;
+  font-size: 1.5rem;
 }
 
 .toggled {
-  background-color: rgb(112, 103, 103);
-  color: aliceblue;
+  background-color: var(--brown);
+  color: #ffffff;
+}
+
+.connection-div {
+  grid-column-start: span 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.connection-div-header {
+  font-weight: 700;
+  font-size: 1.7rem;
+}
+
+.connection-div-content {
+  font-size: 1.5rem;
+}
+
+.message-board, .guesses-remaining {
+  padding: 1rem;
+  font-size: 1.4rem;
 }
 
 .history-row {
@@ -37,29 +107,22 @@ body {
 .history-square {
   width: 30px;
   height: 30px;
-  margin: 5px;
+  margin: 2px 3px;
+  border-radius: 5px;
 }
 
 .history-square.group1 {
-  background-color: blue;
+  background-color: var(--yellow);
 }
 
 .history-square.group2 {
-  background-color: seagreen;
+  background-color: var(--green);
 }
 
 .history-square.group3 {
-  background-color: firebrick;
+  background-color: var(--blue);
 }
 
 .history-square.group4 {
-  background-color: lightcoral;
-}
-
-.connection-div {
-  grid-column-start: span 4;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  background-color: var(--violet);
 }

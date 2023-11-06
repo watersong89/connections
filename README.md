@@ -11,7 +11,6 @@ A 'One Away' notification should show when users select three out of four in a g
 
 
 Still to implement: 
-  On group solve the row should change to show connection and solved words.
 
   Overall styling, including animating transitions.
 
