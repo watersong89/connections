@@ -305,8 +305,6 @@ function solveWall() {
   displayUserHistory();
 }
 
-
-
 function removeNonConnectionDivs() {
   const nonConnectionDivs = document.querySelectorAll('.box');
   nonConnectionDivs.forEach((div) => {
@@ -316,20 +314,20 @@ function removeNonConnectionDivs() {
   });
 }
 
-function reorganizeGrid() {
-  const groupOrder = groups.map(group => group.elements);
-  let currentIndex = 0;
+// function reorganizeGrid() {
+//   const groupOrder = groups.map(group => group.elements);
+//   let currentIndex = 0;
 
-  for (const groupElements of groupOrder) {
-    for (const element of groupElements) {
-      const box = Array.from(grid.children).find(child => child.textContent === element);
-      if (box) {
-        grid.appendChild(box);
-        currentIndex++;
-      }
-    }
-  }
-}
+//   for (const groupElements of groupOrder) {
+//     for (const element of groupElements) {
+//       const box = Array.from(grid.children).find(child => child.textContent === element);
+//       if (box) {
+//         grid.appendChild(box);
+//         currentIndex++;
+//       }
+//     }
+//   }
+// }
 
 function updateDisplay() {
   if (remainingGuesses > 0) {
@@ -339,9 +337,6 @@ function updateDisplay() {
     solveWall();
   }
 }
-
-
-
 
 boxes.forEach((box) => {
   box.addEventListener('click', () => {
