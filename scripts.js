@@ -3,21 +3,25 @@ const groups = [
     name: 'groupOne',
     elements: ['red', 'blue', 'green', 'pink'],
     connection: 'colours',
+    backgroundColor: 'blue',
   },
   {
     name: 'groupTwo',
     elements: ['one', 'two', 'three', 'four'],
     connection: 'numbers',
+    backgroundColor: 'seagreen',
   },
   {
     name: 'groupThree',
     elements: ['a', 'b', 'c', 'd'],
     connection: 'letters',
+    backgroundColor: 'firebrick',
   },
   {
     name: 'groupFour',
     elements: ['north', 'south', 'east', 'west'],
     connection: 'directions',
+    backgroundColor: 'lightcoral',
   },
 ]
 
@@ -232,6 +236,8 @@ function shuffleGrid() {
   }
 }
 
+// Initialize a reference to the last connectionDiv as null
+let lastConnectionDiv = null;
 
 function solveGroup() {
   const correctElements = [];
@@ -242,10 +248,34 @@ function solveGroup() {
       grid.removeChild(child);
     }
   }
-  for (const correctElement of correctElements) {
-    grid.insertBefore(correctElement, grid.firstChild);
+
+  if (correctElements.length > 0) {
+    // Check the first correct element's group
+    const groupClass = Array.from(correctElements[0].classList).find(cls => cls.startsWith('group'));
+    if (groupClass) {
+      const groupId = parseInt(groupClass.replace('group', ''));
+      generateConnectionsDiv(groups[groupId - 1]);
+    }
   }
 }
+
+function generateConnectionsDiv(group) {
+  const connectionDiv = document.createElement('div');
+  connectionDiv.classList.add('connection-div');
+  connectionDiv.textContent = `Connection: ${group.connection}. Elements: ${group.elements.join(', ')}`;
+  connectionDiv.style.backgroundColor = group.backgroundColor;
+  
+  // If a lastConnectionDiv exists, insert the new connectionDiv after it; otherwise, insert it at the beginning of the grid
+  if (lastConnectionDiv) {
+    grid.insertBefore(connectionDiv, lastConnectionDiv.nextSibling);
+  } else {
+    grid.insertBefore(connectionDiv, grid.firstChild);
+  }
+  
+  // Update the reference to the last connectionDiv
+  lastConnectionDiv = connectionDiv;
+}
+
 
 function solveWall() {
   boxes.forEach((box) => {

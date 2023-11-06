@@ -74,3 +74,8 @@ body {
 .history-square.group4 {
   background-color: lightcoral;
 }
+
+.connection-div {
+  grid-column-start: span 4;
+
+}

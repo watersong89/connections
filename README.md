@@ -8,3 +8,11 @@ Previously guessed combinations will not count as an incorrect guess and users w
 Board can be shuffled.
 A log of guesses, correct and incorrect, will be displayed as a result. 
 A 'One Away' notification should show when users select three out of four in a group
+
+
+Still to implement: 
+  On group solve the row should change to show connection and solved words.
+
+  Overall styling, including animating transitions.
+
+  Interactivity from user input.
