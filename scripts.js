@@ -31,24 +31,29 @@ function arraysAreEqual(array1, array2) {
 }
 
 function itemiseHistory() {
+  alreadyChosen = false; // Reset the alreadyChosen flag
+  gameSelection = []; // Clear the gameSelection array
   boxes.forEach((box) => {
     if (box.classList.contains('toggled')) {
       gameSelection.push(box.textContent);
     }
   });
+
   for (let i = 0; i < userHistory.length; i++) {
     if (arraysAreEqual(userHistory[i], gameSelection)) {
       alreadyChosen = true;
       break;
     }
   }
+
   if (alreadyChosen) {
     alert('Already chosen');
     return;
   }
+
   userHistory.push(gameSelection);
-  gameSelection = [];
 }
+
 
 function checkMatches(input, group) {
   let correctGuesses = 0;
