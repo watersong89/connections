@@ -17,6 +17,8 @@ const deselectButton = document.querySelector('.deselect-button');
 const shuffleButton = document.querySelector('.shuffle-button');
 const messageBoard = document.querySelector('.message-board');
 const guessesRemaining = document.querySelector('.guesses-remaining')
+const userHistoryElement = document.querySelector('.user-history');
+
 
 function arraysAreEqual(array1, array2) {
   if (array1.length !== array2.length) {
@@ -31,14 +33,17 @@ function arraysAreEqual(array1, array2) {
 }
 
 function itemiseHistory() {
-  alreadyChosen = false; // Reset the alreadyChosen flag
-  gameSelection = []; // Clear the gameSelection array
+  alreadyChosen = false;
+  gameSelection = [];
+
+  // Loop through boxes to find the toggled ones
   boxes.forEach((box) => {
     if (box.classList.contains('toggled')) {
-      gameSelection.push(box.textContent);
+      gameSelection.push(box);
     }
   });
 
+  // Check for duplicates within userHistory
   for (let i = 0; i < userHistory.length; i++) {
     if (arraysAreEqual(userHistory[i], gameSelection)) {
       alreadyChosen = true;
@@ -48,11 +53,38 @@ function itemiseHistory() {
 
   if (alreadyChosen) {
     alert('Already chosen');
-    return;
+  } else {
+    userHistory.push([...gameSelection]); // Clone the array to avoid reference issues
   }
-
-  userHistory.push(gameSelection);
 }
+
+
+function displayUserHistory() {
+  userHistoryElement.innerHTML = ''; // Clear the user history grid
+
+  userHistory.forEach((selection) => {
+    const historyRow = document.createElement('div');
+    historyRow.classList.add('history-row');
+
+    selection.forEach((item) => {
+      const historySquare = document.createElement('div');
+      historySquare.classList.add('history-square', `group${getGroup(item)}`);
+      historyRow.appendChild(historySquare);
+    });
+
+    userHistoryElement.appendChild(historyRow);
+  });
+}
+
+function getGroup(item) {
+  if (item.classList.contains('group1')) return 1;
+  if (item.classList.contains('group2')) return 2;
+  if (item.classList.contains('group3')) return 3;
+  if (item.classList.contains('group4')) return 4;
+  return 0; // Default or no group
+}
+
+
 
 
 function checkMatches(input, group) {
@@ -156,6 +188,7 @@ function solveWall() {
     box.classList.add('correct');
   })
   reorganizeGrid();
+  displayUserHistory();
 }
 
 function reorganizeGrid() {

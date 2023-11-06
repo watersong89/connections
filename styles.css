@@ -48,3 +48,29 @@ body {
   background-color: fuchsia;
   color: aliceblue;
 }
+
+.history-row {
+  display: flex;
+}
+
+.history-square {
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+}
+
+.history-square.group1 {
+  background-color: blue;
+}
+
+.history-square.group2 {
+  background-color: seagreen;
+}
+
+.history-square.group3 {
+  background-color: firebrick;
+}
+
+.history-square.group4 {
+  background-color: lightcoral;
+}
