@@ -123,11 +123,13 @@ function playGame() {
     return;
   }
 
-  if (resultGroupOne === 'one away' || resultGroupTwo === 'one away' || resultGroupThree === 'one away' || resultGroupFour === 'one away') {
-    messageBoard.textContent = 'One Away!';
-    remainingGuesses--;
-    clearSelection();
-  } else if (resultGroupOne === 'correct' || resultGroupTwo === 'correct' || resultGroupThree === 'correct' || resultGroupFour === 'correct') {
+  if (
+    resultGroupOne === 'correct' ||
+    resultGroupTwo === 'correct' ||
+    resultGroupThree === 'correct' ||
+    resultGroupFour === 'correct'
+  ) {
+    // Handle Correct Guesses
     messageBoard.textContent = 'Correct!';
     if (resultGroupOne === 'correct') {
       handleCorrectMatches('group1');
@@ -138,6 +140,17 @@ function playGame() {
     } else if (resultGroupFour === 'correct') {
       handleCorrectMatches('group4');
     }
+
+    // Check if the user has made four correct guesses
+    if (countCorrectGuesses() === 16) {
+      messageBoard.textContent = 'You won! Game Over!';
+      // Handle game ending here, e.g., display a message or perform any end-game actions
+      displayUserHistory();
+    }
+  } else if (resultGroupOne === 'one away' || resultGroupTwo === 'one away' || resultGroupThree === 'one away' || resultGroupFour === 'one away') {
+    messageBoard.textContent = 'One Away!';
+    remainingGuesses--;
+    clearSelection();
   } else if (resultGroupOne === 'incorrect' || resultGroupTwo === 'incorrect' || resultGroupThree === 'incorrect' || resultGroupFour === 'incorrect') {
     messageBoard.textContent = 'Incorrect!';
     remainingGuesses--;
@@ -147,6 +160,17 @@ function playGame() {
   clearSelection();
   updateDisplay();
 }
+
+function countCorrectGuesses() {
+  let correctGuessCount = 0;
+  boxes.forEach((box) => {
+    if (box.classList.contains('correct')) {
+      correctGuessCount++;
+    }
+  });
+  return correctGuessCount;
+}
+
 
 function handleCorrectMatches(group) {
   boxes.forEach((box) => {
