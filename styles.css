@@ -22,30 +22,11 @@ body {
   align-items: center;
   color: teal;
   cursor: pointer;
+  text-transform: uppercase;
 }
 
 .toggled {
   background-color: rgb(112, 103, 103);
-  color: aliceblue;
-}
-
-.correct.group1 {
-  background-color: green;
-  color: aliceblue;
-}
-
-.correct.group2 {
-  background-color: blueviolet;
-  color: aliceblue;
-}
-
-.correct.group3 {
-  background-color: silver;
-  color: aliceblue;
-}
-
-.correct.group4 {
-  background-color: fuchsia;
   color: aliceblue;
 }
 
