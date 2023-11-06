@@ -20,6 +20,7 @@ body {
   justify-content: center;
   align-items: center;
   padding: 2rem;
+
 }
 
 button {
@@ -82,6 +83,7 @@ h2 {
   text-transform: uppercase;
   font-weight: 600;
   font-size: 1.5rem;
+  transition: transform 0.5s ease;
 }
 
 .toggled {
@@ -138,3 +140,27 @@ h2 {
 .history-square.group4 {
   background-color: var(--violet);
 }
+
+.grid-container.shuffling {
+  animation: shuffle 0.3s ease-in-out infinite;
+}
+
+@keyframes shuffle {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-20px);
+  }
+  50% {
+    transform: translateX(20px);
+  }
+  75% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(10px);
+  }
+}
+
+
