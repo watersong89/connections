@@ -40,11 +40,12 @@ const shuffleButton = document.querySelector('.shuffle-button');
 const messageBoard = document.querySelector('.message-board');
 const guessesRemaining = document.querySelector('.guesses-remaining')
 const userHistoryElement = document.querySelector('.user-history');
+const alertElement = document.querySelector('.alert');
 const defaultMaxFontSize = 24;
 
 //On-page-load functions//
 populateGrid(groups);
-shuffleGrid();
+initialShuffle();
 adjustTextSize();
 //////////////////////
 
@@ -90,7 +91,13 @@ function itemiseHistory() {
   }
 
   if (alreadyChosen) {
-    alert('Already chosen');
+    alertElement.innerHTML = `
+    <h2>You've already made that selection!</h2>
+    `
+    alertElement.style.display = 'flex';
+    setTimeout(() => {
+      alertElement.style.display = 'none';
+    }, 2000)
   } else {
     userHistory.push([...gameSelection]); // Clone the array to avoid reference issues
   }
@@ -188,10 +195,18 @@ function playGame() {
     }
   } else if (oneAwayResults.length > 0) {
     messageBoard.textContent = 'One Away!';
+    grid.classList.add('shuffling');
+    setTimeout(() => {
+      grid.classList.remove('shuffling');
+    }, 300);
     remainingGuesses--;
     clearSelection();
   } else {
     messageBoard.textContent = 'Incorrect!';
+    grid.classList.add('shuffling');
+    setTimeout(() => {
+      grid.classList.remove('shuffling');
+    }, 300);
     remainingGuesses--;
   }
 
@@ -223,7 +238,14 @@ function handleCorrectMatches(groupName) {
   solveGroup();
 }
 
+function initialShuffle() {
+  const nonCorrectElements = Array.from(grid.children).filter(child => !child.classList.contains('correct') && !child.classList.contains('connection-div'));
 
+  for (let i = nonCorrectElements.length; i >= 0; i--) {
+    const randomIndex = Math.floor(Math.random() * i);
+    grid.appendChild(nonCorrectElements[randomIndex]);
+  }
+}
 
 
 function shuffleGrid() {
@@ -366,7 +388,13 @@ boxes.forEach((box) => {
 
 submitButton.addEventListener('click', () => {
   if(toggledItems < 4){
-    alert('Please make four choices!')
+    alertElement.innerHTML = `
+    <h2>Please make four selections!</h2>
+    `
+    alertElement.style.display = 'flex';
+    setTimeout(() => {
+      alertElement.style.display = 'none';
+    }, 2000)
   }
 else if(countCorrectGuesses() !== 16 && toggledItems === 4) {
   itemiseHistory();

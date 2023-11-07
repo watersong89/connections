@@ -12,9 +12,8 @@ A 'One Away' notification should show when users select three out of four in a g
 
 Still to implement: 
 
-  Add shuffle animation to 'One Away' and 'Incorrect' scenarios.
   Remove alerts and create dom manipulations instead.
 
-  Make device responsive.
+  Make text size responsive.
 
   Interactivity from user input.
