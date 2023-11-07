@@ -63,6 +63,10 @@ h2 {
   margin-bottom: 2rem;
 }
 
+.create-button {
+  margin-bottom: 1rem;
+}
+
 .grid-container{
   display: grid;
   grid-template-columns: repeat(4, minmax(100px, 200px));
@@ -183,6 +187,16 @@ h2 {
 .alert>h2 {
   font-size: 2.5rem;
   font-weight: 700;
+}
+
+.create-form {
+  height: 90vh;
+  width: 90vw;
+  position: absolute;
+  background-color: var(--purple);
+  border-radius: 10px;
+  top: 4rem;
+  display: none;
 }
 
 @media screen and (max-width: 850px) {

@@ -1,5 +1,3 @@
-import { groups } from './common.js';
-
 const groupOneNo1 = document.getElementById('connectionGrp1No1');
 const groupOneNo2 = document.getElementById('connectionGrp1No2');
 const groupOneNo3 = document.getElementById('connectionGrp1No3');
