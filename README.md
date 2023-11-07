@@ -11,9 +11,6 @@ A 'One Away' notification should show when users select three out of four in a g
 
 
 Still to implement: 
-
-  Remove alerts and create dom manipulations instead.
-
   Make text size responsive.
 
   Interactivity from user input.
