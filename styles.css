@@ -192,11 +192,67 @@ h2 {
 .create-form {
   height: 90vh;
   width: 90vw;
+  max-width: 1000px;
   position: absolute;
   background-color: var(--purple);
   border-radius: 10px;
   top: 4rem;
   display: none;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+}
+
+label {
+  font-size: 1.3rem;
+}
+
+input {
+  border: none;
+  font-size: 1rem;
+  padding: 1rem 0.4rem;
+}
+
+input:focus {
+  outline: none;
+}
+
+.overall-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-form h2 {
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+
+.create-form h1 {
+  text-align: center;
+}
+
+.connection-container {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.connection-container input {
+  width: 20vw
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-submit {
+  width: 20vw;
+  margin-top: 2rem;
 }
 
 @media screen and (max-width: 850px) {
