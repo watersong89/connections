@@ -15,4 +15,6 @@ Still to implement:
   Add shuffle animation to 'One Away' and 'Incorrect' scenarios.
   Remove alerts and create dom manipulations instead.
 
+  Make device responsive.
+
   Interactivity from user input.

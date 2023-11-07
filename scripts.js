@@ -40,10 +40,12 @@ const shuffleButton = document.querySelector('.shuffle-button');
 const messageBoard = document.querySelector('.message-board');
 const guessesRemaining = document.querySelector('.guesses-remaining')
 const userHistoryElement = document.querySelector('.user-history');
+const defaultMaxFontSize = 24;
 
 //On-page-load functions//
 populateGrid(groups);
 shuffleGrid();
+adjustTextSize();
 //////////////////////
 
 function populateGrid(groups) {
@@ -379,3 +381,34 @@ deselectButton.addEventListener('click', () => {
 shuffleButton.addEventListener("click", () => {
   shuffleGrid();
 });
+
+function adjustTextSize() {
+  boxes.forEach((box) => {
+    let fontSize = defaultMaxFontSize; // Start with the default maximum font size
+    const minFontSize = 10; // Set a minimum font size
+
+    // Continuously check for both text overflow and available space
+    while (box.scrollWidth > box.offsetWidth && fontSize > minFontSize) {
+      // Text is overflowing, decrease font size
+      fontSize -= 1;
+      box.style.fontSize = `${fontSize}px`;
+    }
+
+    while (box.scrollWidth < box.offsetWidth && fontSize < defaultMaxFontSize) {
+      // Text is not overflowing, increase font size
+      fontSize += 1;
+      box.style.fontSize = `${fontSize}px`;
+    }
+  });
+}
+
+// Add an event listener for the 'resize' event
+window.addEventListener('resize', () => {
+  // Adjust text size when the window is resized
+  adjustTextSize();
+  // The following loop checks for available space and increases font size if there's room
+  boxes.forEach((box) => {
+    adjustTextSize(box);
+  });
+});
+
